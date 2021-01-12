@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/notesForm.dart';
+import 'pages/notesList.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: Colors.orange,
           buttonColor: Colors.green),
-      home: NotesForm(),
+      home: NotesList(),
     );
   }
 }

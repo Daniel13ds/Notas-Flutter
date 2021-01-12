@@ -14,11 +14,12 @@ class NotesForm extends StatelessWidget {
     }
   }
 
-  saveForm() {
+  saveForm(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       NOTES.add(note);
       note = Note();
+      Navigator.pop(context);
     }
   }
 
@@ -28,36 +29,52 @@ class NotesForm extends StatelessWidget {
       appBar: AppBar(
         title: Text('Nueva Nota'),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            FlatButton(onPressed: () {}, child: Text('Cancelar')),
-            FlatButton(onPressed: saveForm, child: Text('Guardar')),
-          ],
+      bottomNavigationBar: _buttonsForm(context),
+      body: _bodyForm(),
+    );
+  }
+
+  Form _bodyForm() {
+    return Form(
+      key: _formKey,
+      child: Column(children: [
+        ListTile(
+          leading: Icon(Icons.title),
+          title: TextFormField(
+            decoration: InputDecoration(hintText: 'Titulo de la nota'),
+            validator: _validateTitle,
+            onSaved: (newValue) => note.title = newValue,
+          ),
         ),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Column(children: [
-          ListTile(
-            leading: Icon(Icons.title),
-            title: TextFormField(
-              decoration: InputDecoration(hintText: 'Titulo de la nota'),
-              validator: _validateTitle,
-              onSaved: (newValue) => note.title = newValue,
-            ),
+        ListTile(
+          leading: Icon(Icons.content_copy),
+          title: TextFormField(
+            decoration: InputDecoration(hintText: 'Contenido de la nota'),
+            maxLines: 6,
+            onSaved: (newValue) => note.content = newValue,
           ),
-          ListTile(
-            leading: Icon(Icons.content_copy),
-            title: TextFormField(
-              decoration: InputDecoration(hintText: 'Contenido de la nota'),
-              maxLines: 6,
-              onSaved: (newValue) => note.content = newValue,
-            ),
-          ),
-        ]),
+        ),
+      ]),
+    );
+  }
+
+  Padding _buttonsForm(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancelar')),
+          FlatButton(
+              onPressed: () {
+                saveForm(context);
+              },
+              child: Text('Guardar')),
+        ],
       ),
     );
   }

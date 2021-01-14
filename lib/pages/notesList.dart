@@ -38,8 +38,11 @@ class _NotesListState extends State<NotesList> {
           child: Card(
             elevation: 10,
             child: ListTile(
-              title: Text(note.title),
-              subtitle: Text(note.content),
+              title: Text(note.title,
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold)),
+              subtitle:
+                  Text(note.content, style: TextStyle(color: Colors.black)),
             ),
             color: note.getMaterialColor(),
           ),

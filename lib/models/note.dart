@@ -15,7 +15,7 @@ class Note {
     NoteColor.Blue: Colors.blue,
     NoteColor.Yellow: Colors.yellow,
     NoteColor.Orange: Colors.orange,
-    NoteColor.Purple: Colors.purple,
+    NoteColor.Purple: Colors.purpleAccent,
     NoteColor.Cyan: Colors.tealAccent[400],
   };
 

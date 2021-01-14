@@ -31,7 +31,7 @@ class Note {
 }
 
 var NOTES = <Note>[
-  Note(title: 'Hola', content: 'Adios'),
-  Note(title: 'Hello', content: 'Bye'),
-  Note(title: 'Bonjour', content: 'Ar voir'),
+  Note(title: 'Hola', content: 'Adios', color: NoteColor.Cyan),
+  Note(title: 'Hello', content: 'Bye', color: NoteColor.Green),
+  Note(title: 'Bonjour', content: 'Ar voir', color: NoteColor.Purple),
 ];

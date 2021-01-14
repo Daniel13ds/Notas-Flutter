@@ -4,6 +4,7 @@ import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
 
 class NotesList extends StatelessWidget {
+  static final route = '/notesList';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,11 +15,7 @@ class NotesList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotesForm(),
-              ));
+          Navigator.pushNamed(context, NotesForm.route);
         },
       ),
     );

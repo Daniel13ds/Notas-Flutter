@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/note.dart';
 
 class NotesForm extends StatelessWidget {
+  static final route = '/notesForm';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Note note = Note();
 

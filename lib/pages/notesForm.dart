@@ -2,10 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/note.dart';
 
-class NotesForm extends StatelessWidget {
+class NotesForm extends StatefulWidget {
   static final route = '/notesForm';
+
+  @override
+  _NotesFormState createState() => _NotesFormState();
+}
+
+class _NotesFormState extends State<NotesForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   Note note = Note();
+
+  NoteColor _selectedColor = NoteColor.Orange;
 
   String _validateTitle(String value) {
     if (value == null || value == '') {
@@ -18,6 +27,7 @@ class NotesForm extends StatelessWidget {
   saveForm(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      note.color = _selectedColor;
       NOTES.add(note);
       note = Note();
       Navigator.pop(context, true);
@@ -55,6 +65,25 @@ class NotesForm extends StatelessWidget {
             onSaved: (newValue) => note.content = newValue,
           ),
         ),
+        ListTile(
+          leading: Icon(Icons.palette),
+          title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: NoteColor.values.map((NoteColor color) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedColor = color;
+                    });
+                  },
+                  child: Container(
+                    width: color == _selectedColor ? 35 : 30,
+                    height: color == _selectedColor ? 35 : 30,
+                    color: Note.getMaterialEnumColor(color),
+                  ),
+                );
+              }).toList()),
+        )
       ]),
     );
   }

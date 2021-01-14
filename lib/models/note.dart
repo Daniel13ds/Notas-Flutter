@@ -9,14 +9,14 @@ class Note {
   String content;
   NoteColor color;
 
-  final NoteColorMap = <NoteColor, Color>{
+  static final NoteColorMap = <NoteColor, Color>{
     NoteColor.Red: Colors.red,
-    NoteColor.Green: Colors.green,
+    NoteColor.Green: Colors.greenAccent[400],
     NoteColor.Blue: Colors.blue,
     NoteColor.Yellow: Colors.yellow,
     NoteColor.Orange: Colors.orange,
     NoteColor.Purple: Colors.purple,
-    NoteColor.Cyan: Colors.cyan,
+    NoteColor.Cyan: Colors.tealAccent[400],
   };
 
   Note(
@@ -26,6 +26,10 @@ class Note {
       @required this.color = NoteColor.Orange});
 
   getMaterialColor() {
+    return NoteColorMap[color];
+  }
+
+  static Color getMaterialEnumColor(NoteColor color) {
     return NoteColorMap[color];
   }
 }

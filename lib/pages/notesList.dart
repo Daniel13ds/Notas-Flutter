@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
 
-class NotesList extends StatelessWidget {
+class NotesList extends StatefulWidget {
   static final route = '/notesList';
+
+  @override
+  _NotesListState createState() => _NotesListState();
+}
+
+class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +20,9 @@ class NotesList extends StatelessWidget {
       body: _createList(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.pushNamed(context, NotesForm.route);
+        onPressed: () async {
+          var newNote = await Navigator.pushNamed(context, NotesForm.route);
+          if (newNote) setState(() {});
         },
       ),
     );

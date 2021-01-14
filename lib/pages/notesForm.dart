@@ -20,7 +20,7 @@ class NotesForm extends StatelessWidget {
       _formKey.currentState.save();
       NOTES.add(note);
       note = Note();
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     }
   }
 
@@ -67,7 +67,7 @@ class NotesForm extends StatelessWidget {
         children: [
           FlatButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, false);
               },
               child: Text('Cancelar')),
           FlatButton(

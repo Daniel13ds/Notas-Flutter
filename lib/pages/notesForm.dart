@@ -33,11 +33,11 @@ class NotesForm extends StatelessWidget {
         title: Text('Nueva Nota'),
       ),
       bottomNavigationBar: _buttonsForm(context),
-      body: _bodyForm(),
+      body: _bodyForm(context),
     );
   }
 
-  Form _bodyForm() {
+  Form _bodyForm(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(children: [
@@ -60,7 +60,10 @@ class NotesForm extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.palette),
           title: ColorPicker(
-            onChanged: (color) => note.color = color,
+            onChanged: (color) {
+              note.color = color;
+              FocusScope.of(context).unfocus();
+            },
           ),
         )
       ]),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
+import 'package:notas_flutter/widgets/myDrawer.dart';
 
 class NotesList extends StatefulWidget {
   static final route = '/notesList';
@@ -15,6 +16,9 @@ class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(onPop: () {
+        setState(() {});
+      }),
       appBar: AppBar(
         title: Text('Mis Notas'),
       ),

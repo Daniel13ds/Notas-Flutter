@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         NotesList.route: (context) => NotesList(),
         NotesForm.route: (context) => NotesForm(),
       },
-      home: NotesList(),
+      initialRoute: NotesList.route,
     );
   }
 }

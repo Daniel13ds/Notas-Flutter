@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/widgets/colorPicker.dart';
+import 'package:notas_flutter/widgets/myDrawer.dart';
 
 class NotesForm extends StatelessWidget {
   static final route = '/notesForm';
@@ -39,6 +40,7 @@ class NotesForm extends StatelessWidget {
       isEditing = true;
     }
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         title: Text('Nueva Nota'),
       ),

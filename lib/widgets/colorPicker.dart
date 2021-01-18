@@ -3,16 +3,19 @@ import 'package:notas_flutter/models/note.dart';
 
 class ColorPicker extends StatefulWidget {
   void Function(NoteColor) onChanged;
-  ColorPicker({this.onChanged});
+  NoteColor initialValue;
+
+  ColorPicker({this.onChanged, this.initialValue}) {}
 
   @override
   _ColorPickerState createState() => _ColorPickerState();
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  NoteColor _selectedColor = NoteColor.Red;
+  NoteColor _selectedColor;
   @override
   Widget build(BuildContext context) {
+    if (_selectedColor == null) _selectedColor = widget.initialValue;
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: NoteColor.values.map((NoteColor color) {

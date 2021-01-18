@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -62,6 +60,12 @@ class _NotesListState extends State<NotesList> {
                         color: Colors.black, fontWeight: FontWeight.bold)),
                 subtitle:
                     Text(note.content, style: TextStyle(color: Colors.black)),
+                onTap: () async {
+                  var changed = await Navigator.pushNamed(
+                      context, NotesForm.route,
+                      arguments: note);
+                  if (changed) setState(() {});
+                },
               ),
               color: note.getMaterialColor(),
             ),

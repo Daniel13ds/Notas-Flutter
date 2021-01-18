@@ -8,6 +8,8 @@ class NotesForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Note note = Note();
+  Note updateNote;
+  bool isEditing = false;
 
   String _validateTitle(String value) {
     if (value == null || value == '') {
@@ -20,7 +22,10 @@ class NotesForm extends StatelessWidget {
   saveForm(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      NOTES.add(note);
+      if (isEditing) {
+        updateNote.copyFrom(note);
+      } else
+        NOTES.add(note);
       note = Note();
       Navigator.pop(context, true);
     }
@@ -28,6 +33,11 @@ class NotesForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var arguments = ModalRoute.of(context).settings.arguments;
+    if (arguments != null) {
+      updateNote = arguments;
+      isEditing = true;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Nueva Nota'),
@@ -44,6 +54,7 @@ class NotesForm extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.title),
           title: TextFormField(
+            initialValue: isEditing ? updateNote.title : note.title,
             decoration: InputDecoration(hintText: 'Titulo de la nota'),
             validator: _validateTitle,
             onSaved: (newValue) => note.title = newValue,
@@ -52,6 +63,7 @@ class NotesForm extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.content_copy),
           title: TextFormField(
+            initialValue: isEditing ? updateNote.content : note.content,
             decoration: InputDecoration(hintText: 'Contenido de la nota'),
             maxLines: 6,
             onSaved: (newValue) => note.content = newValue,
@@ -60,6 +72,7 @@ class NotesForm extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.palette),
           title: ColorPicker(
+            initialValue: isEditing ? updateNote.color : note.color,
             onChanged: (color) {
               note.color = color;
               FocusScope.of(context).unfocus();

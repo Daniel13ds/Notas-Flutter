@@ -23,7 +23,14 @@ class Note {
       {this.id,
       @required this.title = '',
       this.content,
-      @required this.color = NoteColor.Orange});
+      @required this.color = NoteColor.Red});
+
+  void copyFrom(Note otherNote) {
+    id = otherNote.id;
+    title = otherNote.title;
+    content = otherNote.content;
+    color = otherNote.color;
+  }
 
   getMaterialColor() {
     return NoteColorMap[color];

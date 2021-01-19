@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
+import 'package:notas_flutter/widgets/background.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
 
 class NotesList extends StatefulWidget {
@@ -22,7 +23,12 @@ class _NotesListState extends State<NotesList> {
       appBar: AppBar(
         title: Text('Mis Notas'),
       ),
-      body: _createList(),
+      body: Stack(children: [
+        Background(
+          containNotes: NOTES.isNotEmpty,
+        ),
+        _createList()
+      ]),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
@@ -33,7 +39,19 @@ class _NotesListState extends State<NotesList> {
     );
   }
 
-  ListView _createList() {
+  Widget _createList() {
+    if (NOTES.length == 0) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 100),
+        child: Card(
+          child: ListTile(
+            leading: Icon(Icons.warning),
+            title: Text('No hay Notas Creadas'),
+            subtitle: Text('Pulsa el botón + para crear una nota'),
+          ),
+        ),
+      );
+    }
     return ListView.builder(
       itemCount: NOTES.length,
       itemBuilder: (context, index) {

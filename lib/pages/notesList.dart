@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:notas_flutter/models/note.dart';
+import 'package:notas_flutter/models/preferences.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
+import 'package:notas_flutter/pages/notesSettings.dart';
 import 'package:notas_flutter/widgets/background.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
 
@@ -16,16 +18,26 @@ class NotesList extends StatefulWidget {
 class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
+    final preferences = Preferences();
+    var background = preferences.notesBackground;
+
     return Scaffold(
       drawer: MyDrawer(onPop: () {
         setState(() {});
       }),
       appBar: AppBar(
         title: Text('Mis Notas'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, NotesSettings.route),
+          ),
+        ],
       ),
       body: Stack(children: [
         Background(
           containNotes: NOTES.isNotEmpty,
+          background: background,
         ),
         _createList()
       ]),

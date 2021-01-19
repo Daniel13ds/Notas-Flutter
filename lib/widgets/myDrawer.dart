@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
 import 'package:notas_flutter/pages/notesList.dart';
+import 'package:notas_flutter/pages/notesSettings.dart';
 import 'package:notas_flutter/widgets/rainbow.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -20,7 +21,8 @@ class MyDrawer extends StatelessWidget {
             title: Text("Mis Notas"),
             onTap: () {
               Navigator.pop(context);
-              if (ModalRoute.of(context).settings.name == NotesForm.route)
+              if (ModalRoute.of(context).settings.name == NotesForm.route ||
+                  ModalRoute.of(context).settings.name == NotesSettings.route)
                 Navigator.pop(context);
             },
           ),
@@ -32,6 +34,21 @@ class MyDrawer extends StatelessWidget {
               Navigator.pop(context);
               if (ModalRoute.of(context).settings.name == NotesList.route)
                 await Navigator.pushNamed(context, NotesForm.route);
+              if (ModalRoute.of(context).settings.name == NotesSettings.route)
+                Navigator.popAndPushNamed(context, NotesForm.route);
+              onPop();
+            },
+          ),
+          Rainbow(),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text("Preferencias"),
+            onTap: () {
+              Navigator.pop(context);
+              if (ModalRoute.of(context).settings.name == NotesList.route)
+                Navigator.pushNamed(context, NotesSettings.route);
+              if (ModalRoute.of(context).settings.name == NotesForm.route)
+                Navigator.popAndPushNamed(context, NotesSettings.route);
               onPop();
             },
           ),

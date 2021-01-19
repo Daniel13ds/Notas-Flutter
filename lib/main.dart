@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:notas_flutter/models/preferences.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
+import 'package:notas_flutter/pages/notesSettings.dart';
 import 'pages/notesList.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final preferences = Preferences();
+  await preferences.initPreferences();
   runApp(MyApp());
 }
 
@@ -19,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         NotesList.route: (context) => NotesList(),
         NotesForm.route: (context) => NotesForm(),
+        NotesSettings.route: (context) => NotesSettings(),
       },
       initialRoute: NotesList.route,
     );

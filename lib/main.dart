@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/preferences.dart';
+import 'package:notas_flutter/models/settingsModel.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
 import 'package:notas_flutter/pages/notesSettings.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'pages/notesList.dart';
 
 void main() async {
@@ -14,19 +16,22 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Aplicación de Notas',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.orange,
-          buttonColor: Colors.green),
-      routes: {
-        NotesList.route: (context) => NotesList(),
-        NotesForm.route: (context) => NotesForm(),
-        NotesSettings.route: (context) => NotesSettings(),
-      },
-      initialRoute: NotesList.route,
+    return ScopedModel(
+      model: SettingsModel(),
+      child: MaterialApp(
+        title: 'Aplicación de Notas',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            brightness: Brightness.dark,
+            primaryColor: Colors.orange,
+            buttonColor: Colors.green),
+        routes: {
+          NotesList.route: (context) => NotesList(),
+          NotesForm.route: (context) => NotesForm(),
+          NotesSettings.route: (context) => NotesSettings(),
+        },
+        initialRoute: NotesList.route,
+      ),
     );
   }
 }

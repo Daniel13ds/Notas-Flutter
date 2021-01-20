@@ -23,7 +23,7 @@ class Note {
       {this.id,
       @required this.title = '',
       this.content,
-      @required this.color = NoteColor.Red});
+      this.color = NoteColor.Red});
 
   void copyFrom(Note otherNote) {
     id = otherNote.id;

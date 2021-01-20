@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/models/preferences.dart';
+import 'package:notas_flutter/models/settingsModel.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
 import 'package:notas_flutter/pages/notesSettings.dart';
 import 'package:notas_flutter/widgets/background.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class NotesList extends StatefulWidget {
   static final route = '/notesList';
@@ -35,9 +37,11 @@ class _NotesListState extends State<NotesList> {
         ],
       ),
       body: Stack(children: [
-        Background(
-          containNotes: NOTES.isNotEmpty,
-          background: background,
+        ScopedModelDescendant<SettingsModel>(
+          builder: (context, child, model) => Background(
+            containNotes: NOTES.isNotEmpty,
+            background: model.background,
+          ),
         ),
         _createList()
       ]),

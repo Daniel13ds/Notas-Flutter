@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/preferences.dart';
+import 'package:notas_flutter/models/settingsModel.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class NotesSettings extends StatefulWidget {
   static final route = '/notesSettings';
@@ -12,6 +14,12 @@ class NotesSettings extends StatefulWidget {
 
 class _NotesSettingsState extends State<NotesSettings> {
   String _background;
+  final _preferences = Preferences();
+
+  void initState() {
+    super.initState();
+    _background = _preferences.notesBackground;
+  }
 
   _onChanged(String value) {
     setState(() {
@@ -70,13 +78,14 @@ class _NotesSettingsState extends State<NotesSettings> {
                   Navigator.pop(context);
                 },
                 child: Text('Cancelar')),
-            FlatButton(
-                onPressed: () {
-                  final preferences = Preferences();
-                  preferences.notesBackground = _background;
-                  Navigator.pop(context);
-                },
-                child: Text('Guardar')),
+            ScopedModelDescendant<SettingsModel>(
+              builder: (context, child, model) => FlatButton(
+                  onPressed: () {
+                    model.background = _background;
+                    Navigator.pop(context);
+                  },
+                  child: Text('Guardar')),
+            ),
           ],
         ),
       ),

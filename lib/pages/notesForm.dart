@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notas_flutter/models/note.dart';
+import 'package:notas_flutter/models/notesModel.dart';
 import 'package:notas_flutter/widgets/colorPicker.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class NotesForm extends StatelessWidget {
   static final route = '/notesForm';
@@ -25,10 +27,13 @@ class NotesForm extends StatelessWidget {
       _formKey.currentState.save();
       if (isEditing) {
         updateNote.copyFrom(note);
-      } else
-        NOTES.add(note);
+        ScopedModel.of<NotesModel>(context, rebuildOnChange: true).updateNote();
+      } else {
+        ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+            .addNote(note);
+      }
       note = Note();
-      Navigator.pop(context, true);
+      Navigator.pop(context);
     }
   }
 
@@ -93,7 +98,7 @@ class NotesForm extends StatelessWidget {
         children: [
           FlatButton(
               onPressed: () {
-                Navigator.pop(context, false);
+                Navigator.pop(context);
               },
               child: Text('Cancelar')),
           FlatButton(

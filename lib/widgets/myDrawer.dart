@@ -6,9 +6,6 @@ import 'package:notas_flutter/pages/notesSettings.dart';
 import 'package:notas_flutter/widgets/rainbow.dart';
 
 class MyDrawer extends StatelessWidget {
-  void Function() onPop;
-  MyDrawer({this.onPop});
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,13 +27,12 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.add),
             title: Text("Nueva Nota"),
-            onTap: () async {
+            onTap: () {
               Navigator.pop(context);
               if (ModalRoute.of(context).settings.name == NotesList.route)
-                await Navigator.pushNamed(context, NotesForm.route);
+                Navigator.pushNamed(context, NotesForm.route);
               if (ModalRoute.of(context).settings.name == NotesSettings.route)
                 Navigator.popAndPushNamed(context, NotesForm.route);
-              onPop();
             },
           ),
           Rainbow(),
@@ -49,7 +45,6 @@ class MyDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, NotesSettings.route);
               if (ModalRoute.of(context).settings.name == NotesForm.route)
                 Navigator.popAndPushNamed(context, NotesSettings.route);
-              onPop();
             },
           ),
           Rainbow(),

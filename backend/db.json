@@ -5,6 +5,12 @@
       "content": "Nota jaja",
       "color": "NoteColor.Yellow",
       "id": 2
+    },
+    {
+      "title": "Nota Añadida 2",
+      "content": "Nota jeje",
+      "color": "NoteColor.Blue",
+      "id": 2
     }
   ]
 }

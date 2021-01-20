@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:notas_flutter/models/note.dart';
 import 'package:notas_flutter/models/notesModel.dart';
-import 'package:notas_flutter/models/preferences.dart';
 import 'package:notas_flutter/models/settingsModel.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
 import 'package:notas_flutter/pages/notesSettings.dart';
@@ -15,11 +14,6 @@ class NotesList extends StatelessWidget {
   static final route = '/notesList';
   @override
   Widget build(BuildContext context) {
-    final notes =
-        ScopedModel.of<NotesModel>(context, rebuildOnChange: true).notes;
-    final preferences = Preferences();
-    var background = preferences.notesBackground;
-
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -34,7 +28,6 @@ class NotesList extends StatelessWidget {
       body: Stack(children: [
         ScopedModelDescendant<SettingsModel>(
           builder: (context, child, model) => Background(
-            containNotes: notes.isNotEmpty,
             background: model.background,
           ),
         ),
@@ -47,20 +40,34 @@ class NotesList extends StatelessWidget {
   }
 
   Widget _createList(BuildContext context) {
-    final notes =
-        ScopedModel.of<NotesModel>(context, rebuildOnChange: true).notes;
-    if (notes.length == 0) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 100),
-        child: Card(
-          child: ListTile(
-            leading: Icon(Icons.warning),
-            title: Text('No hay Notas Creadas'),
-            subtitle: Text('Pulsa el botón + para crear una nota'),
-          ),
+    return ScopedModelDescendant<NotesModel>(
+        builder: (context, child, model) => FutureBuilder<List<Note>>(
+              future: model.notes,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final notes = snapshot.data;
+                  return _buildNotesList(notes);
+                } else {
+                  return _buildEmptyList();
+                }
+              },
+            ));
+  }
+
+  Widget _buildEmptyList() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 100),
+      child: Card(
+        child: ListTile(
+          leading: Icon(Icons.warning),
+          title: Text('No hay Notas Creadas'),
+          subtitle: Text('Pulsa el botón + para crear una nota'),
         ),
-      );
-    }
+      ),
+    );
+  }
+
+  Widget _buildNotesList(List<Note> notes) {
     return ListView.builder(
       itemCount: notes.length,
       itemBuilder: (context, index) {

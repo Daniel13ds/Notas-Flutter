@@ -1,11 +1,14 @@
+import 'package:notas_flutter/services/notesApiService.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'note.dart';
 
 class NotesModel extends Model {
   var _notes = <Note>[];
 
-  get notes {
-    return _notes;
+  NotesApiService api = NotesApiService();
+
+  Future<List<Note>> get notes {
+    return api.getNotes();
   }
 
   addNote(Note note) {

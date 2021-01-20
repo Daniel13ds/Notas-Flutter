@@ -1,7 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum NoteColor { Red, Green, Blue, Yellow, Orange, Purple, Cyan }
+
+NoteColor enumFromString<T>(Iterable<NoteColor> values, String value) {
+  return values.firstWhere(
+    (type) => type.toString() == value,
+    orElse: () => null,
+  );
+}
 
 class Note {
   int id;
@@ -23,7 +32,18 @@ class Note {
       {this.id,
       @required this.title = '',
       this.content,
-      this.color = NoteColor.Red});
+      @required this.color = NoteColor.Red});
+
+  static Note fromMap(Map<String, dynamic> note) => Note(
+      id: note['id'],
+      title: note['title'],
+      content: note['content'],
+      color: enumFromString(NoteColor.values, note['color']));
+
+  static List<Note> notesFromJson(String jsonData) {
+    final data = json.decode(jsonData);
+    return List<Note>.from(data.map((note) => Note.fromMap(note)));
+  }
 
   void copyFrom(Note otherNote) {
     id = otherNote.id;

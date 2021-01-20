@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class Background extends StatelessWidget {
-  bool containNotes = true;
   String background;
-  Background({this.containNotes, this.background});
+  Background({this.background});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +10,8 @@ class Background extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-          image: DecorationImage(
-              image:
-                  AssetImage(containNotes ? background : 'assets/fondo2.jpg'),
-              fit: BoxFit.fill)),
+          image:
+              DecorationImage(image: AssetImage(background), fit: BoxFit.fill)),
     );
   }
 }

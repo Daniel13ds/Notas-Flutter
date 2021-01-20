@@ -1,0 +1,10 @@
+{
+  "notes": [
+    {
+      "title": "Nota Añadida",
+      "content": "Nota jaja",
+      "color": "NoteColor.Yellow",
+      "id": 2
+    }
+  ]
+}

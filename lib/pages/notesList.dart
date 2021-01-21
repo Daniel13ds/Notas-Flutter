@@ -27,6 +27,7 @@ class NotesList extends StatelessWidget {
       ),
       body: Stack(children: [
         ScopedModelDescendant<SettingsModel>(
+          rebuildOnChange: true,
           builder: (context, child, model) => Background(
             background: model.background,
           ),
@@ -41,29 +42,76 @@ class NotesList extends StatelessWidget {
 
   Widget _createList(BuildContext context) {
     return ScopedModelDescendant<NotesModel>(
+        rebuildOnChange: true,
         builder: (context, child, model) => FutureBuilder<List<Note>>(
               future: model.notes,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final notes = snapshot.data;
-                  return _buildNotesList(notes);
-                } else {
-                  return _buildEmptyList();
+                var childWidgets;
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.active:
+                  case ConnectionState.waiting:
+                    childWidgets = ListView(
+                      children: [Center(child: CircularProgressIndicator())],
+                    );
+                    break;
+                  case ConnectionState.done:
+                    if (snapshot.hasError) {
+                      childWidgets = ListView(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 100),
+                            child: Card(
+                              child: ListTile(
+                                leading: Icon(Icons.wifi_off_rounded),
+                                title: Text('Error de conexión'),
+                                subtitle: Text(
+                                    'No se ha podido establecer la conexión con el seridor'),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    } else {
+                      if (snapshot.data == null || snapshot.data.length == 0) {
+                        childWidgets = _buildEmptyList();
+                      } else {
+                        childWidgets = _buildNotesList(snapshot.data);
+                      }
+                    }
+                    break;
+                  default:
+                    childWidgets = ListView(
+                      children: [
+                        Center(
+                          child: Text('Text'),
+                        )
+                      ],
+                    );
+                    break;
                 }
+                return RefreshIndicator(
+                  onRefresh: model.refresh,
+                  child: childWidgets,
+                );
               },
             ));
   }
 
   Widget _buildEmptyList() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 100),
-      child: Card(
-        child: ListTile(
-          leading: Icon(Icons.warning),
-          title: Text('No hay Notas Creadas'),
-          subtitle: Text('Pulsa el botón + para crear una nota'),
-        ),
-      ),
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 100),
+          child: Card(
+            child: ListTile(
+              leading: Icon(Icons.warning),
+              title: Text('No hay Notas Creadas'),
+              subtitle: Text('Pulsa el botón + para crear una nota'),
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -122,6 +170,7 @@ class NotesList extends StatelessWidget {
             child: Text('Cancelar'),
           ),
           ScopedModelDescendant<NotesModel>(
+            rebuildOnChange: true,
             builder: (context, child, model) => FlatButton(
               onPressed: () {
                 model.removeNote(note);

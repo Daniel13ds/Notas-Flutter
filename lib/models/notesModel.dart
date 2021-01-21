@@ -11,6 +11,8 @@ class NotesModel extends Model {
     return api.getNotes();
   }
 
+  Future<void> refresh() async => notifyListeners();
+
   addNote(Note note) {
     _notes.add(note);
     notifyListeners();

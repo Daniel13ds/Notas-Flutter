@@ -2,13 +2,13 @@
   "notes": [
     {
       "title": "Nota Añadida",
-      "content": "Nota jaja",
+      "content": "Nota",
       "color": "NoteColor.Yellow",
-      "id": 2
+      "id": 1
     },
     {
       "title": "Nota Añadida 2",
-      "content": "Nota jeje",
+      "content": "Nota",
       "color": "NoteColor.Blue",
       "id": 2
     }

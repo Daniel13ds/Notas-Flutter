@@ -18,4 +18,16 @@ class NotesApiService {
       return Note.fromJson(response.body);
     }
   }
+
+  Future<bool> removeNote(Note note) async {
+    try {
+      final response = await http.delete(baseUrl + '/notes/${note.id}');
+      if (response.statusCode == 200)
+        return true;
+      else
+        return false;
+    } catch (error) {
+      return false;
+    }
+  }
 }

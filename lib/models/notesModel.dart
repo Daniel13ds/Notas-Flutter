@@ -18,9 +18,10 @@ class NotesModel extends Model {
     notifyListeners();
   }
 
-  removeNote(Note note) {
-    _notes.remove(note);
-    notifyListeners();
+  Future<bool> removeNote(Note note) async {
+    bool deleted = await api.removeNote(note);
+    if (deleted) notifyListeners();
+    return deleted;
   }
 
   updateNote() {

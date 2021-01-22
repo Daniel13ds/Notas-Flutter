@@ -1,12 +1,6 @@
 {
   "notes": [
     {
-      "title": "Nota Añadida",
-      "content": "Nota",
-      "color": "NoteColor.Yellow",
-      "id": 1
-    },
-    {
       "title": "Nota Añadida 2",
       "content": "Nota",
       "color": "NoteColor.Blue",

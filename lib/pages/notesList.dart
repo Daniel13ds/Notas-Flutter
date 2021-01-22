@@ -147,8 +147,16 @@ class NotesList extends StatelessWidget {
                         color: Colors.black, fontWeight: FontWeight.bold)),
                 subtitle:
                     Text(note.content, style: TextStyle(color: Colors.black)),
-                onTap: () => Navigator.pushNamed(context, NotesForm.route,
-                    arguments: note),
+                onTap: () async {
+                  var updated = await Navigator.pushNamed(
+                      context, NotesForm.route,
+                      arguments: note);
+                  if (!updated) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('No se ha podido actualizar la nota'),
+                        duration: Duration(seconds: 5)));
+                  }
+                },
               ),
             ),
           ),

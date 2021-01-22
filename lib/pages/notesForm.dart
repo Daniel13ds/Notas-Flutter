@@ -22,18 +22,22 @@ class NotesForm extends StatelessWidget {
     }
   }
 
-  saveForm(BuildContext context) {
+  saveForm(BuildContext context) async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      var updated;
       if (isEditing) {
         updateNote.copyFrom(note);
-        ScopedModel.of<NotesModel>(context, rebuildOnChange: true).updateNote();
+        updated =
+            await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+                .updateNote(note);
       } else {
-        ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
-            .addNote(note);
+        updated =
+            await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+                .addNote(note);
       }
       note = Note();
-      Navigator.pop(context);
+      Navigator.pop(context, updated);
     }
   }
 
@@ -42,6 +46,7 @@ class NotesForm extends StatelessWidget {
     var arguments = ModalRoute.of(context).settings.arguments;
     if (arguments != null) {
       updateNote = arguments;
+      note.id = updateNote.id;
       isEditing = true;
     }
     return Scaffold(

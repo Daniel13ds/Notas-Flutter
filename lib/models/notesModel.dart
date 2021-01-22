@@ -3,8 +3,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'note.dart';
 
 class NotesModel extends Model {
-  var _notes = <Note>[];
-
   NotesApiService api = NotesApiService();
 
   Future<List<Note>> get notes {
@@ -14,8 +12,9 @@ class NotesModel extends Model {
   Future<void> refresh() async => notifyListeners();
 
   addNote(Note note) async {
-    await api.addNotes(note);
-    notifyListeners();
+    bool added = await api.addNotes(note);
+    if (added) notifyListeners();
+    return added;
   }
 
   Future<bool> removeNote(Note note) async {
@@ -24,7 +23,9 @@ class NotesModel extends Model {
     return deleted;
   }
 
-  updateNote() {
-    notifyListeners();
+  Future<bool> updateNote(Note note) async {
+    bool updated = await api.updateNote(note);
+    if (updated) notifyListeners();
+    return updated;
   }
 }

@@ -1,22 +1,3 @@
 {
-  "notes": [
-    {
-      "title": "Nota Añadida 2",
-      "content": "Nota",
-      "color": "NoteColor.Blue",
-      "id": 2
-    },
-    {
-      "id": 3,
-      "title": "ditdlyxo",
-      "content": "JfKyx",
-      "color": "NoteColor.Blue"
-    },
-    {
-      "id": 4,
-      "title": "itzktx",
-      "content": "Utdoyfp",
-      "color": "NoteColor.Purple"
-    }
-  ]
+  "notes": []
 }

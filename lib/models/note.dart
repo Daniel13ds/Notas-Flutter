@@ -40,10 +40,20 @@ class Note {
       content: note['content'],
       color: enumFromString(NoteColor.values, note['color']));
 
+  Map<String, dynamic> toMap() =>
+      {"id": id, "title": title, "content": content, "color": color.toString()};
+
   static List<Note> notesFromJson(String jsonData) {
     final data = json.decode(jsonData);
     return List<Note>.from(data.map((note) => Note.fromMap(note)));
   }
+
+  static fromJson(String jsonData) {
+    final data = json.decode(jsonData);
+    return fromMap(data);
+  }
+
+  toJson() => json.encode(toMap());
 
   void copyFrom(Note otherNote) {
     id = otherNote.id;

@@ -13,8 +13,8 @@ class NotesModel extends Model {
 
   Future<void> refresh() async => notifyListeners();
 
-  addNote(Note note) {
-    _notes.add(note);
+  addNote(Note note) async {
+    await api.addNotes(note);
     notifyListeners();
   }
 

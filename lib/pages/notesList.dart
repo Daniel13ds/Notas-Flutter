@@ -66,7 +66,7 @@ class NotesList extends StatelessWidget {
                                 leading: Icon(Icons.wifi_off_rounded),
                                 title: Text('Error de conexión'),
                                 subtitle: Text(
-                                    'No se ha podido establecer la conexión con el seridor'),
+                                    'No se ha podido establecer la conexión con el servidor'),
                               ),
                             ),
                           )

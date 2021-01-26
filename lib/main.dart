@@ -3,6 +3,7 @@ import 'package:notas_flutter/models/notesModel.dart';
 import 'package:notas_flutter/models/preferences.dart';
 import 'package:notas_flutter/models/settingsModel.dart';
 import 'package:notas_flutter/pages/notesForm.dart';
+import 'package:notas_flutter/pages/notesLogin.dart';
 import 'package:notas_flutter/pages/notesSettings.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'pages/notesList.dart';
@@ -32,8 +33,9 @@ class MyApp extends StatelessWidget {
             NotesList.route: (context) => NotesList(),
             NotesForm.route: (context) => NotesForm(),
             NotesSettings.route: (context) => NotesSettings(),
+            NotesLogin.route: (context) => NotesLogin(),
           },
-          initialRoute: NotesList.route,
+          initialRoute: NotesLogin.route,
         ),
       ),
     );

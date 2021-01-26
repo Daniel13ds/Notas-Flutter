@@ -1,3 +1,74 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "id": 1,
+      "title": "Nota añadida desde la App",
+      "content": "Probando Get",
+      "color": "NoteColor.Green",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "title": "Nota que va a ser Editada",
+      "content": "Probando el Put",
+      "color": "NoteColor.Orange",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "title": "Nota Roja",
+      "content": "Rojo",
+      "color": "NoteColor.Red",
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "title": "Nota Verde",
+      "content": "Verde",
+      "color": "NoteColor.Green",
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "title": "Nota Azul",
+      "content": "Azul",
+      "color": "NoteColor.Blue",
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "title": "Nota Amarilla",
+      "content": "Amarillo",
+      "color": "NoteColor.Yellow",
+      "userId": 1
+    },
+    {
+      "id": 7,
+      "title": "Nota Naranja",
+      "content": "Naranja",
+      "color": "NoteColor.Orange",
+      "userId": 1
+    },
+    {
+      "id": 8,
+      "title": "Nota Violeta",
+      "content": "Violeta",
+      "color": "NoteColor.Purple",
+      "userId": 1
+    },
+    {
+      "id": 9,
+      "title": "Nota Turquesa",
+      "content": "Turquesa",
+      "color": "NoteColor.Cyan",
+      "userId": 1
+    }
+  ],
+  "users": [
+    {
+      "email": "daniel@correo.com",
+      "password": "$2a$10$Om0mJBdt3fPT8qRE/bup6eTrVKPVzGiR9837yYsqKgqW8.lqGkThy",
+      "id": 1
+    }
+  ]
 }

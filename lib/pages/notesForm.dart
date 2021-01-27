@@ -22,19 +22,17 @@ class NotesForm extends StatelessWidget {
     }
   }
 
-  saveForm(BuildContext context) async {
+  saveForm(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       var updated;
       if (isEditing) {
         updateNote.copyFrom(note);
-        updated =
-            await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
-                .updateNote(note);
+        ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+            .updateNote(note);
       } else {
-        updated =
-            await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
-                .addNote(note);
+        ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+            .addNote(note);
       }
       note = Note();
       Navigator.pop(context, updated);

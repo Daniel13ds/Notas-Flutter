@@ -1,21 +1,17 @@
 import 'dart:convert';
 
-class User {
+import 'package:notas_flutter/models/userCredentials.dart';
+
+class User extends UserCredentials {
   int id;
-  String email;
-  String password;
   String firstname;
   String lastname;
 
-  User({this.id, this.email, this.password, this.firstname, this.lastname});
+  User({this.id, email, password, this.firstname, this.lastname})
+      : super(email: email, password: password);
 
   get fullName {
     return '$firstname $lastname';
-  }
-
-  String loginToJson() {
-    final loginData = {"email": email, "password": password};
-    return json.encode(loginData);
   }
 
   static User fromJson(String userJson) {

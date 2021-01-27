@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:notas_flutter/models/user.dart';
+import 'package:notas_flutter/models/notesModel.dart';
+import 'package:notas_flutter/models/userCredentials.dart';
+import 'package:notas_flutter/pages/notesList.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class NotesLogin extends StatefulWidget {
   static final route = '/notesLogin';
@@ -13,11 +16,22 @@ class NotesLogin extends StatefulWidget {
 class _NotesLoginState extends State<NotesLogin> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _showPassword = false;
-  User _user = User();
+  bool _error = false;
+  UserCredentials _credentials = UserCredentials();
 
-  _login() {
+  _login() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      var logged =
+          await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+              .login(_credentials);
+      if (logged) {
+        Navigator.of(context).pushReplacementNamed(NotesList.route);
+      } else {
+        setState(() {
+          _error = true;
+        });
+      }
     }
   }
 
@@ -31,6 +45,12 @@ class _NotesLoginState extends State<NotesLogin> {
   String _passwordValidator(String value) {
     if (value.length < 3)
       return 'La contraseña no puede contener menos de 3 caracteres';
+  }
+
+  _onChangeField(String value) {
+    setState(() {
+      _error = false;
+    });
   }
 
   @override
@@ -64,7 +84,8 @@ class _NotesLoginState extends State<NotesLogin> {
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(hintText: 'Correo alectrónico'),
                   validator: _emailValidator,
-                  onSaved: (newValue) => _user.email = newValue,
+                  onSaved: (newValue) => _credentials.email = newValue,
+                  onChanged: _onChangeField,
                 ),
               ),
               ListTile(
@@ -84,11 +105,23 @@ class _NotesLoginState extends State<NotesLogin> {
                         },
                       )),
                   validator: _passwordValidator,
-                  onSaved: (newValue) => _user.password = newValue,
+                  onSaved: (newValue) => _credentials.password = newValue,
+                  onChanged: _onChangeField,
                 ),
               ),
+              if (_error)
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Text(
+                    'Usuario o contraseña incorrecta',
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0),
+                padding: const EdgeInsets.only(top: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [

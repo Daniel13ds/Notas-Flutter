@@ -11,6 +11,12 @@ class NotesModel extends Model {
   Preferences _preferences = Preferences();
   bool logged = false;
 
+  NotesModel() {
+    if (tokenIsValid()) {
+      api = NotesApiService(_preferences.token);
+    }
+  }
+
   Future<List<Note>> get notes {
     return api.getNotes();
   }
@@ -43,5 +49,13 @@ class NotesModel extends Model {
       _preferences.token = null;
     }
     return logged;
+  }
+
+  bool tokenIsValid() {
+    final token = _preferences.token;
+    if (token != null && token != "") {
+      return AuthApiService(token: token).tokenIsValid();
+    } else
+      return false;
   }
 }

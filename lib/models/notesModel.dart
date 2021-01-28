@@ -6,7 +6,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'note.dart';
 
 class NotesModel extends Model {
-  NotesApiService api = NotesApiService();
+  NotesApiService api;
   AuthApiService authApi = AuthApiService();
   Preferences _preferences = Preferences();
   bool logged = false;
@@ -37,6 +37,7 @@ class NotesModel extends Model {
     if (token != null) {
       logged = true;
       _preferences.token = token;
+      api = NotesApiService(token);
     } else {
       logged = false;
       _preferences.token = null;

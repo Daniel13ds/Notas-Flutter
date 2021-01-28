@@ -17,6 +17,7 @@ class Note {
   String title;
   String content;
   NoteColor color;
+  int userId;
 
   static final NoteColorMap = <NoteColor, Color>{
     NoteColor.Red: Colors.red,
@@ -32,20 +33,32 @@ class Note {
       {this.id,
       @required this.title = '',
       this.content,
-      @required this.color = NoteColor.Red});
+      @required this.color = NoteColor.Red,
+      this.userId});
 
   static Note fromMap(Map<String, dynamic> note) => Note(
       id: note['id'],
       title: note['title'],
       content: note['content'],
-      color: enumFromString(NoteColor.values, note['color']));
+      color: enumFromString(NoteColor.values, note['color']),
+      userId: note['userId']);
 
-  Map<String, dynamic> toMap() =>
-      {"id": id, "title": title, "content": content, "color": color.toString()};
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "title": title,
+        "content": content,
+        "color": color.toString(),
+        "userId": userId
+      };
 
-  static List<Note> notesFromJson(String jsonData) {
+  static List<Note> notesFromJson(String jsonData, int filterId) {
     final data = json.decode(jsonData);
-    return List<Note>.from(data.map((note) => Note.fromMap(note)));
+    final notes = List<Note>.from(data.map((note) => Note.fromMap(note)));
+    var filteredNotes = <Note>[];
+    notes.forEach((note) {
+      if (note.userId == filterId) filteredNotes.add(note);
+    });
+    return filteredNotes;
   }
 
   static fromJson(String jsonData) {
@@ -60,6 +73,7 @@ class Note {
     title = otherNote.title;
     content = otherNote.content;
     color = otherNote.color;
+    userId = otherNote.userId;
   }
 
   getMaterialColor() {

@@ -45,6 +45,7 @@ class NotesForm extends StatelessWidget {
     if (arguments != null) {
       updateNote = arguments;
       note.id = updateNote.id;
+      note.userId = updateNote.userId;
       isEditing = true;
     }
     return Scaffold(

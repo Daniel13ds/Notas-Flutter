@@ -168,7 +168,7 @@ class NotesList extends StatelessWidget {
   void _deleteNote(BuildContext context, Note note) {
     showDialog(
       context: context,
-      builder: (contextDialog) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Eliminar Nota'),
         content:
             Text('¿Estas seguro de que quieres borrar la nota ${note.title}?'),
@@ -179,8 +179,9 @@ class NotesList extends StatelessWidget {
           ),
           ScopedModelDescendant<NotesModel>(
             rebuildOnChange: true,
-            builder: (contextDialog, child, model) => FlatButton(
+            builder: (context, child, model) => FlatButton(
               onPressed: () async {
+                Navigator.pop(context);
                 var deleted = await model.removeNote(note);
                 if (!deleted) {
                   Scaffold.of(context).showSnackBar(SnackBar(
@@ -188,7 +189,6 @@ class NotesList extends StatelessWidget {
                     duration: Duration(seconds: 5),
                   ));
                 }
-                Navigator.pop(contextDialog);
               },
               child: Text('Aceptar'),
             ),

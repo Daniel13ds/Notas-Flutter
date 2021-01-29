@@ -1,4 +1,5 @@
 import 'package:notas_flutter/models/preferences.dart';
+import 'package:notas_flutter/models/user.dart';
 import 'package:notas_flutter/models/userCredentials.dart';
 import 'package:notas_flutter/services/authApiService.dart';
 import 'package:notas_flutter/services/notesApiService.dart';
@@ -7,13 +8,19 @@ import 'note.dart';
 
 class NotesModel extends Model {
   NotesApiService api;
-  AuthApiService authApi = AuthApiService();
+  AuthApiService authApi;
   Preferences _preferences = Preferences();
   bool logged = false;
+  User user;
 
   NotesModel() {
     if (tokenIsValid()) {
       api = NotesApiService(_preferences.token);
+      authApi = AuthApiService(token: _preferences.token);
+      getUser();
+      logged = true;
+    } else {
+      authApi = AuthApiService();
     }
   }
 
@@ -44,6 +51,7 @@ class NotesModel extends Model {
       logged = true;
       _preferences.token = token;
       api = NotesApiService(token);
+      getUser();
     } else {
       logged = false;
       _preferences.token = null;
@@ -57,5 +65,14 @@ class NotesModel extends Model {
       return AuthApiService(token: token).tokenIsValid();
     } else
       return false;
+  }
+
+  getUser() async {
+    user = await authApi.getUser();
+  }
+
+  logout() {
+    logged = false;
+    _preferences.token = null;
   }
 }

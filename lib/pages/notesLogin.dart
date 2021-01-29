@@ -5,6 +5,8 @@ import 'package:notas_flutter/pages/notesList.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import 'notesSettings.dart';
+
 class NotesLogin extends StatefulWidget {
   static final route = '/notesLogin';
   NotesLogin({Key key}) : super(key: key);
@@ -58,6 +60,12 @@ class _NotesLoginState extends State<NotesLogin> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Iniciar Sesión'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, NotesSettings.route),
+          ),
+        ],
       ),
       drawer: MyDrawer(),
       body: SingleChildScrollView(

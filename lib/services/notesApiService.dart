@@ -11,13 +11,13 @@ class NotesApiService extends ApiService {
         headers: {"Authorization": "Bearer $token"});
     if (response.statusCode == 200) {
       final mapJwt = JwtDecoder.decode(token);
-      final userId = getUserIdFromToken(token);
+      final userId = getUserIdFromToken();
       return Note.notesFromJson(response.body, userId);
     }
   }
 
   Future<Note> addNotes(Note note) async {
-    final userId = getUserIdFromToken(token);
+    final userId = getUserIdFromToken();
     note.userId = userId;
     final response = await http.post(ApiService.baseUrl + '/notes',
         headers: {

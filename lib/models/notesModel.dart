@@ -1,6 +1,8 @@
+import 'package:http/http.dart';
 import 'package:notas_flutter/models/preferences.dart';
 import 'package:notas_flutter/models/user.dart';
 import 'package:notas_flutter/models/userCredentials.dart';
+import 'package:notas_flutter/reponse/registerResponse.dart';
 import 'package:notas_flutter/services/authApiService.dart';
 import 'package:notas_flutter/services/notesApiService.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -45,8 +47,7 @@ class NotesModel extends Model {
     notifyListeners();
   }
 
-  Future<bool> login(UserCredentials credentials) async {
-    final token = await authApi.login(credentials);
+  bool _setLoginStatus(String token) {
     if (token != null) {
       logged = true;
       _preferences.token = token;
@@ -57,6 +58,19 @@ class NotesModel extends Model {
       _preferences.token = null;
     }
     return logged;
+  }
+
+  Future<bool> login(UserCredentials credentials) async {
+    final token = await authApi.login(credentials);
+    return _setLoginStatus(token);
+  }
+
+  Future<RegisterResponse> register(User user) async {
+    final response = await authApi.register(user);
+    if (response.status == RegisterResponseStatus.Success) {
+      _setLoginStatus(response.token);
+    }
+    return response;
   }
 
   bool tokenIsValid() {

@@ -14,6 +14,16 @@ class User extends UserCredentials {
     return '$firstname $lastname';
   }
 
+  String toJson() {
+    final loginData = {
+      "email": email,
+      "password": password,
+      "firstname": firstname,
+      "lastname": lastname
+    };
+    return json.encode(loginData);
+  }
+
   static User fromJson(String userJson) {
     final userMap = jsonDecode(userJson);
     return User(

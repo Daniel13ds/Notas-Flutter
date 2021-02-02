@@ -66,9 +66,11 @@
   ],
   "users": [
     {
+      "id": 1,
       "email": "daniel@correo.com",
       "password": "$2a$10$Om0mJBdt3fPT8qRE/bup6eTrVKPVzGiR9837yYsqKgqW8.lqGkThy",
-      "id": 1
+      "firstname": "Daniel",
+      "lastname": "del Salto Cobo"
     }
   ]
 }

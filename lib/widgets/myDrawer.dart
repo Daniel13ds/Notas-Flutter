@@ -18,6 +18,7 @@ class MyDrawer extends StatelessWidget {
             padding: EdgeInsets.only(top: 100),
             children: [
               _buildDrawerHeader(model),
+              Padding(padding: EdgeInsets.only(top: 20)),
               if (!model.logged) Rainbow(),
               if (!model.logged)
                 ListTile(
@@ -95,13 +96,7 @@ class MyDrawer extends StatelessWidget {
       );
     } else {
       return DrawerHeader(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            fit: BoxFit.contain,
-            image: AssetImage('assets/daniel.png'),
-          ),
-        ),
+        decoration: BoxDecoration(color: Colors.grey[850]),
         child: Center(
           child: Text(
             'Mis Notas',

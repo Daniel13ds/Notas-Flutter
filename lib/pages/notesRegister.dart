@@ -1,42 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:notas_flutter/models/notesModel.dart';
-import 'package:notas_flutter/models/userCredentials.dart';
-import 'package:notas_flutter/pages/notesList.dart';
+import 'package:notas_flutter/models/user.dart';
+import 'package:notas_flutter/pages/notesLogin.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
-import 'package:scoped_model/scoped_model.dart';
 
-import 'notesRegister.dart';
 import 'notesSettings.dart';
 
-class NotesLogin extends StatefulWidget {
-  static final route = '/notesLogin';
-  NotesLogin({Key key}) : super(key: key);
+class NotesRegister extends StatefulWidget {
+  static final route = '/notesRegister';
+  NotesRegister({Key key}) : super(key: key);
 
   @override
   _NotesLoginState createState() => _NotesLoginState();
 }
 
-class _NotesLoginState extends State<NotesLogin> {
+class _NotesLoginState extends State<NotesRegister> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _showPassword = false;
-  bool _error = false;
-  UserCredentials _credentials = UserCredentials();
+  User _user = User();
 
-  _login() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      var logged =
-          await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
-              .login(_credentials);
-      if (logged) {
-        Navigator.of(context).pushReplacementNamed(NotesList.route);
-      } else {
-        setState(() {
-          _error = true;
-        });
-      }
-    }
-  }
+  register() async {}
 
   String _emailValidator(String value) {
     final emailValid = RegExp(
@@ -51,16 +33,14 @@ class _NotesLoginState extends State<NotesLogin> {
   }
 
   _onChangeField(String value) {
-    setState(() {
-      _error = false;
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Iniciar Sesión'),
+        title: Text('Crear Cuenta'),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
@@ -93,7 +73,7 @@ class _NotesLoginState extends State<NotesLogin> {
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(hintText: 'Correo alectrónico'),
                   validator: _emailValidator,
-                  onSaved: (newValue) => _credentials.email = newValue,
+                  onSaved: (newValue) => _user.email = newValue,
                   onChanged: _onChangeField,
                 ),
               ),
@@ -114,35 +94,20 @@ class _NotesLoginState extends State<NotesLogin> {
                         },
                       )),
                   validator: _passwordValidator,
-                  onSaved: (newValue) => _credentials.password = newValue,
+                  onSaved: (newValue) => _user.password = newValue,
                   onChanged: _onChangeField,
                 ),
               ),
-              if (_error)
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Text(
-                    'Usuario o contraseña incorrecta',
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
-                  ),
-                ),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    RaisedButton(child: Text('Crear Cuenta'), onPressed: () {}),
                     RaisedButton(
-                        child: Text('Iniciar Sesión'),
-                        onPressed: () {
-                          _login();
-                        }),
-                    RaisedButton(
-                      child: Text('Registrar'),
+                      child: Text('Iniciar Sesión'),
                       onPressed: () => Navigator.pushReplacementNamed(
-                          context, NotesRegister.route),
+                          context, NotesLogin.route),
                     ),
                   ],
                 ),

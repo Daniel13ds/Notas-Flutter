@@ -95,7 +95,7 @@ class _NotesLoginState extends State<NotesLogin> {
                 title: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(hintText: 'Correo alectrónico'),
+                  decoration: InputDecoration(hintText: 'Correo electrónico'),
                   validator: _emailValidator,
                   onSaved: (newValue) => _credentials.email = newValue,
                   onChanged: _onChangeField,

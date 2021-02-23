@@ -123,7 +123,7 @@ class _NotesLoginState extends State<NotesRegister> {
                 title: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(hintText: 'Correo alectrónico'),
+                  decoration: InputDecoration(hintText: 'Correo electrónico'),
                   validator: _emailValidator,
                   onSaved: (newValue) => _user.email = newValue,
                   onChanged: _onChangeField,

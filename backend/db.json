@@ -62,6 +62,13 @@
       "content": "Turquesa",
       "color": "NoteColor.Cyan",
       "userId": 1
+    },
+    {
+      "id": 10,
+      "title": "Nota de Minerva",
+      "content": "Prueba de Minerva",
+      "color": "NoteColor.Blue",
+      "userId": 2
     }
   ],
   "users": [
@@ -71,6 +78,13 @@
       "password": "$2a$10$Om0mJBdt3fPT8qRE/bup6eTrVKPVzGiR9837yYsqKgqW8.lqGkThy",
       "firstname": "Daniel",
       "lastname": "del Salto Cobo"
+    },
+    {
+      "email": "minervasden@correo.com",
+      "password": "$2a$10$OYORnR0vGAzv6SF1IWsD8OtaN8g38pcDzjNJ4Xq2eYw/CPb1wRb5W",
+      "firstname": "Andrea",
+      "lastname": "Minerva",
+      "id": 2
     }
   ]
 }

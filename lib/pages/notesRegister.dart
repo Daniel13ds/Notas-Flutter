@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:notas_flutter/models/notesModel.dart';
 import 'package:notas_flutter/models/user.dart';
+import 'package:notas_flutter/pages/notesList.dart';
 import 'package:notas_flutter/pages/notesLogin.dart';
+import 'package:notas_flutter/reponse/registerResponse.dart';
 import 'package:notas_flutter/widgets/myDrawer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import 'notesSettings.dart';
 
@@ -17,8 +21,32 @@ class _NotesLoginState extends State<NotesRegister> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _showPassword = false;
   User _user = User();
+  String errorMessage;
+  RegisterResponse registerResponse =
+      RegisterResponse.unknownError("Error Desconocido");
 
-  register() async {}
+  _register() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      registerResponse =
+          await ScopedModel.of<NotesModel>(context, rebuildOnChange: true)
+              .register(_user);
+      if (registerResponse.status == RegisterResponseStatus.Success) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, NotesList.route, (route) => false);
+      } else {
+        setState(() {
+          errorMessage = registerResponse.errorMessage;
+        });
+      }
+    }
+  }
+
+  String _nameValidator(String value) {
+    if (value == null || value.length == 0) {
+      return "Nombre y apellidos obligatorios";
+    }
+  }
 
   String _emailValidator(String value) {
     final emailValid = RegExp(
@@ -59,11 +87,35 @@ class _NotesLoginState extends State<NotesRegister> {
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.person, size: 100),
+                    child: Icon(
+                      Icons.app_registration,
+                      size: 100,
+                      color: Colors.grey[850],
+                    ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.orangeAccent,
                       borderRadius: BorderRadius.circular(70)),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.person_outline),
+                title: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(hintText: 'Nombre'),
+                  validator: _nameValidator,
+                  onSaved: (newValue) => _user.firstname = newValue,
+                  onChanged: _onChangeField,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(hintText: 'Apellidos'),
+                  validator: _nameValidator,
+                  onSaved: (newValue) => _user.lastname = newValue,
+                  onChanged: _onChangeField,
                 ),
               ),
               ListTile(
@@ -103,11 +155,15 @@ class _NotesLoginState extends State<NotesRegister> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    RaisedButton(child: Text('Crear Cuenta'), onPressed: () {}),
+                    RaisedButton(
+                        child: Text('Crear Cuenta'),
+                        onPressed: () {
+                          _register();
+                        }),
                     RaisedButton(
                       child: Text('Iniciar Sesión'),
-                      onPressed: () => Navigator.pushReplacementNamed(
-                          context, NotesLogin.route),
+                      onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                          context, NotesLogin.route, (route) => false),
                     ),
                   ],
                 ),

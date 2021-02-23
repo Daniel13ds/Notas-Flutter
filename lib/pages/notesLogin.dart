@@ -79,7 +79,11 @@ class _NotesLoginState extends State<NotesLogin> {
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.person, size: 100),
+                    child: Icon(
+                      Icons.person,
+                      size: 100,
+                      color: Colors.grey[850],
+                    ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.orangeAccent,
@@ -141,8 +145,8 @@ class _NotesLoginState extends State<NotesLogin> {
                         }),
                     RaisedButton(
                       child: Text('Registrar'),
-                      onPressed: () => Navigator.pushReplacementNamed(
-                          context, NotesRegister.route),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, NotesRegister.route),
                     ),
                   ],
                 ),

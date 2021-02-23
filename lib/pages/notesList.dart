@@ -19,6 +19,12 @@ class NotesList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Mis Notas'),
         actions: [
+          ScopedModelDescendant<NotesModel>(
+              builder: (context, child, model) => IconButton(
+                  icon: Icon(Icons.bug_report_sharp),
+                  onPressed: () {
+                    model.token = "e";
+                  })),
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () => Navigator.pushNamed(context, NotesSettings.route),

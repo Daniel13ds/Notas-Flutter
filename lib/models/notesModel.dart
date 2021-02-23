@@ -27,7 +27,12 @@ class NotesModel extends Model {
   }
 
   Future<List<Note>> get notes {
-    return api.getNotes();
+    if (tokenIsValid()) {
+      return api.getNotes();
+    } else {
+      logout();
+      notifyListeners();
+    }
   }
 
   Future<void> refresh() async => notifyListeners();
@@ -88,5 +93,11 @@ class NotesModel extends Model {
   logout() {
     logged = false;
     _preferences.token = null;
+  }
+
+  set token(String token) {
+    _preferences.token = token;
+    api = NotesApiService(token);
+    authApi = AuthApiService(token: token);
   }
 }

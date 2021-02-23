@@ -14,27 +14,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     notesModel = NotesModel();
-    var initialRoute = NotesLogin.route;
-    if (notesModel.tokenIsValid()) initialRoute = NotesList.route;
     return ScopedModel(
       model: notesModel,
       child: ScopedModel(
         model: SettingsModel(),
-        child: MaterialApp(
-          title: 'Aplicación de Notas',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              brightness: Brightness.dark,
-              primaryColor: Colors.orange,
-              buttonColor: Colors.green),
-          routes: {
-            NotesList.route: (context) => NotesList(),
-            NotesForm.route: (context) => NotesForm(),
-            NotesSettings.route: (context) => NotesSettings(),
-            NotesLogin.route: (context) => NotesLogin(),
-            NotesRegister.route: (context) => NotesRegister(),
+        child: ScopedModelDescendant<NotesModel>(
+          builder: (context, child, model) {
+            var initialRoute = NotesLogin.route;
+            if (notesModel.tokenIsValid()) initialRoute = NotesList.route;
+            return MaterialApp(
+              key: UniqueKey(),
+              title: 'Aplicación de Notas',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                  brightness: Brightness.dark,
+                  primaryColor: Colors.orange,
+                  buttonColor: Colors.green),
+              routes: {
+                NotesList.route: (context) => NotesList(),
+                NotesForm.route: (context) => NotesForm(),
+                NotesSettings.route: (context) => NotesSettings(),
+                NotesLogin.route: (context) => NotesLogin(),
+                NotesRegister.route: (context) => NotesRegister(),
+              },
+              initialRoute: initialRoute,
+            );
           },
-          initialRoute: initialRoute,
         ),
       ),
     );
